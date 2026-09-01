@@ -1,0 +1,13 @@
+{
+  "model": "LogisticRegression",
+  "test_accuracy": 0.9613165931455717,
+  "test_macro_f1": 0.9612434705290855,
+  "per_class_f1": {
+    "WALKING": 0.9695181907571289,
+    "WALKING_UPSTAIRS": 0.956989247311828,
+    "WALKING_DOWNSTAIRS": 0.9783132530120482,
+    "SITTING": 0.9239013933547695,
+    "STANDING": 0.9387387387387387,
+    "LAYING": 1.0
+  }
+}

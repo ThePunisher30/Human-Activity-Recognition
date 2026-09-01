@@ -1,0 +1,27 @@
+{
+  "stage1_static_vs_dynamic_accuracy": 1.0,
+  "flat_svm": {
+    "accuracy": 0.9504580929759077,
+    "macro_f1": 0.9499067200798832,
+    "per_class_f1": {
+      "WALKING": 0.9625246548323472,
+      "WALKING_UPSTAIRS": 0.9445026178010472,
+      "WALKING_DOWNSTAIRS": 0.9516728624535316,
+      "SITTING": 0.9144050104384134,
+      "STANDING": 0.9263351749539595,
+      "LAYING": 1.0
+    }
+  },
+  "two_stage": {
+    "accuracy": 0.9501187648456056,
+    "macro_f1": 0.9496750236287378,
+    "per_class_f1": {
+      "WALKING": 0.9615004935834156,
+      "WALKING_UPSTAIRS": 0.9464847848898216,
+      "WALKING_DOWNSTAIRS": 0.9529702970297029,
+      "SITTING": 0.913451511991658,
+      "STANDING": 0.9236430542778289,
+      "LAYING": 1.0
+    }
+  }
+}

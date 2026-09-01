@@ -1,0 +1,14 @@
+{
+  "val_accuracy": 0.9114285707473755,
+  "test_accuracy": 0.9121140241622925,
+  "macro_f1": 0.9123691734939093,
+  "per_class_f1": {
+    "WALKING": 0.9698857736240913,
+    "WALKING_UPSTAIRS": 0.9349503858875413,
+    "WALKING_DOWNSTAIRS": 0.9170305676855895,
+    "SITTING": 0.8220255653883972,
+    "STANDING": 0.8321884200196271,
+    "LAYING": 0.9981343283582089
+  },
+  "input": "raw 9x128 inertial signals (no hand-engineered features)"
+}

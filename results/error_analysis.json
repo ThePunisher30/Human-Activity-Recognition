@@ -1,0 +1,8 @@
+{
+  "overall_accuracy": 0.9613165931455717,
+  "worst_subject": 10,
+  "worst_subject_accuracy": 0.8707482993197279,
+  "best_subject_accuracy": 0.9973753280839895,
+  "top_error_pair": "SITTING -> STANDING",
+  "top_error_pair_share": 0.5
+}

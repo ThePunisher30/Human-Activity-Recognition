@@ -1,0 +1,7 @@
+{
+  "n_features": 561,
+  "n_unique_columns": 540,
+  "n_duplicate_names": 42,
+  "pairs_above_r95": 2252,
+  "pairs_total": 157080
+}

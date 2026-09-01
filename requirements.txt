@@ -1,0 +1,7 @@
+numpy>=1.26
+pandas>=2.0
+scikit-learn>=1.4
+matplotlib>=3.8
+
+# Optional: only needed for the 1D CNN on raw signals (har/deep.py)
+# torch>=2.2
