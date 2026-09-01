@@ -8,6 +8,7 @@ This is more than a model comparison. The project asks — and answers, with exp
 2. **Where do the errors actually live?** (one confusion pair accounts for half of them)
 3. **How many of the 561 engineered features are actually needed?** (~200)
 4. **Can a CNN on raw signals match hand-engineered features?** (see results)
+5. **What does tuning buy when the search itself is leakage-free?** (a tuned linear SVM takes the top spot)
 
 ## Key findings
 
@@ -68,6 +69,22 @@ The gate (static vs dynamic) is **100% accurate** on the test set, so we can spl
 
 **Result: 91.2% test accuracy** (macro F1 0.91). On the dynamic activities the CNN is competitive with the classical models (WALKING F1 = 0.97), but it loses most where every model loses — SITTING (0.82) and STANDING (0.83). Takeaway: with only 21 training subjects, 561 expert-designed features still beat learned features by ~5 points, and the intrinsic static-posture ambiguity hurts both approaches equally. Full per-class numbers in `results/cnn.json`.
 
+### 6. Hyperparameter tuning done right buys another half point
+
+Tuning is model selection, so it can leak exactly like evaluation can: a search whose inner CV mixes subjects picks hyperparameters that exploit person-specific patterns. `har/tune.py` runs randomized search with **GroupKFold inside the search**, refits the winner on the full training split, and touches the test set once per model:
+
+| Model (tuned) | Subject-wise CV | Official test | Best params |
+|---|---|---|---|
+| **LinearSVC** | **94.3%** | **96.6%** | C = 0.347 |
+| Ensemble (soft vote of top 3) | — | 96.5% | LogReg + SVM + HistGB |
+| SVM (RBF) | 94.1% | 96.4% | C = 25.4, γ = 0.013 |
+| Logistic Regression | 94.1% | 96.1% | C = 14.5 |
+| HistGradientBoosting | 93.9% | 94.6% | lr = 0.27, 15 leaves |
+| RandomForest | 91.9% | 92.7% | 500 trees, sqrt features |
+| KNN | 90.5% | 91.7% | k = 31, distance, L1 |
+
+Three takeaways: a well-regularized **linear** model is the best classifier on this dataset (96.6%, macro F1 0.967) — consistent with the original UCI HAR paper, whose authors also used a multiclass linear SVM; the ensemble does *not* beat its best member, because the strong models make the same SITTING/STANDING mistakes (correlated errors are the enemy of ensembling); and tuned KNN wants k = 31 with distance weighting — far from the k ≈ 5 default most tutorials use.
+
 ## Project structure
 
 ```
@@ -75,6 +92,7 @@ The gate (static vs dynamic) is **100% accurate** on the test set, so we can spl
 │   ├── data.py           #   dataset download + loaders (features & raw signals)
 │   ├── train.py          #   model comparison under all three protocols
 │   ├── features.py       #   redundancy analysis + selection curve
+│   ├── tune.py           #   randomized search with GroupKFold inside the search
 │   ├── two_stage.py      #   hierarchical static/dynamic classifier
 │   ├── error_analysis.py #   per-subject accuracy + confusion-pair shares
 │   ├── deep.py           #   1D CNN on raw signals (needs torch)
@@ -93,6 +111,7 @@ cd Human-Activity-Recognition
 pip install -r requirements.txt
 
 python -m har.train           # model comparison + leakage gap + confusion matrix
+python -m har.tune            # hyperparameter search, subject-wise (~30-60 min)
 python -m har.features        # redundancy report + feature-selection curve
 python -m har.two_stage       # hierarchical classifier
 python -m har.error_analysis  # per-subject accuracy + error pairs

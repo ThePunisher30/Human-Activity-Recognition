@@ -1,0 +1,8 @@
+{
+  "model": "LinearSVC",
+  "test_accuracy": 0.9664065151001018,
+  "test_macro_f1": 0.9666870370097286,
+  "params": {
+    "C": 0.34703
+  }
+}
